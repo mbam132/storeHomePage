@@ -5,8 +5,10 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import NavBar from '../components/NavBar';
 import BottomBar from '../components/BottomBar';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../styles.css';
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
@@ -23,14 +25,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
   }, []);
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Head>
         <title>Prueba Front End</title>
       </Head>
       <NavBar />
       <Component {...pageProps} />
       <BottomBar />
-    </>
+    </QueryClientProvider>
   );
 }
 

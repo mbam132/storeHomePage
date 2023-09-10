@@ -69,7 +69,7 @@ function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen w-screen bg-white flex dark:bg-black flex-col pt-navbar">
+    <div className="min-h-screen w-screen bg-white flex dark:bg-black flex-col mt-navbar">
       <HeroSection />
       <OutStandingProducts products={outStandingProducts} />
       <PopularProducts products={popularProducts} />

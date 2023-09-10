@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^7.54.0",
+    "@tanstack/react-query": "^4.35.0",
     "avilatek-utils": "^0.1.0",
+    "axios": "^1.5.0",
     "framer-motion": "^10.12.16",
     "nanoid": "^4.0.2",
     "next": "^13.4.4",
