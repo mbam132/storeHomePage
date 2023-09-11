@@ -8,12 +8,14 @@ import {
 } from '@tanstack/react-query';
 import AnimBeforeRender from '../components/AnimBeforeRender';
 import FetchingAndCaching from '../components/FetchingAndCaching';
+import StateHandling from '../components/StateHandling';
 
 function Experimenting() {
   return (
     <div className="mt-navbar mb-[75%]">
-      <AnimBeforeRender />
-      <FetchingAndCaching />
+      {/* <AnimBeforeRender/> */}
+      {/* <FetchingAndCaching /> */}
+      <StateHandling />
     </div>
   );
 }
