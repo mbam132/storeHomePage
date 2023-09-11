@@ -26,7 +26,8 @@
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.10.1",
+    "throttle-debounce": "^5.0.0"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",

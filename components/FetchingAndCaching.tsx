@@ -6,6 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import { debounce } from 'throttle-debounce';
 
 function FetchingAndCaching() {
   // we avoid having to declare: 1. useEffect, 2. if statements, 3. error handlers
@@ -16,6 +17,11 @@ function FetchingAndCaching() {
   const [currentPostId, setCurrentPostId] = useState(-1);
 
   const renderPostsList = currentPostId === -1;
+
+  const debouncedHandleSetPostId = debounce(1600, (id) => {
+    setCurrentPostId(id);
+  });
+
   return (
     <div>
       {renderPostsList && (
@@ -41,7 +47,7 @@ function FetchingAndCaching() {
                   <button
                     className="bg-primary-300 rounded p-1 text-white"
                     onClick={() => {
-                      setCurrentPostId(post.id ?? -1);
+                      debouncedHandleSetPostId(post.id ?? -1);
                     }}
                   >
                     Open details
