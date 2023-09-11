@@ -6,9 +6,9 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import AnimBeforeRender from '../components/AnimBeforeRender';
-import FetchingAndCaching from '../components/FetchingAndCaching';
-import StateHandling from '../components/StateHandling';
+import AnimBeforeRender from '../components/Experimenting/AnimBeforeRender';
+import FetchingAndCaching from '../components/Experimenting/FetchingAndCaching';
+import StateHandling from '../components/Experimenting/StateHandling';
 
 function Experimenting() {
   return (
