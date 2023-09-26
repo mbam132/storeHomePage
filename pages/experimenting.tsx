@@ -9,13 +9,15 @@ import {
 import AnimBeforeRender from '../components/Experimenting/AnimBeforeRender';
 import FetchingAndCaching from '../components/Experimenting/FetchingAndCaching';
 import StateHandling from '../components/Experimenting/StateHandling';
+import HandleUsers from '../components/Experimenting/HandleUsers';
 
 function Experimenting() {
   return (
-    <div className="mt-navbar mb-[75%]">
+    <div className="mt-navbar mb-[40%]">
       {/* <AnimBeforeRender/> */}
       {/* <FetchingAndCaching /> */}
-      <StateHandling />
+      {/* <StateHandling /> */}
+      <HandleUsers />
     </div>
   );
 }
