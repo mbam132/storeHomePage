@@ -19,21 +19,22 @@ function HandleUsers() {
   const [displayUserDeletedMessage, setDisplayUserDeletedMessage] =
     useState(false);
 
-  const [usersCreatedLog, setUsersCreatedLog] = useState([]);
+  const [usersActionsLog, setUsersActionsLog] = useState([]);
 
   const handleCreatedUserSubscriptionMessage = (data) => {
-    setUsersCreatedLog((prev) => [...prev, { ...data.createdUser.user }]);
+    setUsersActionsLog((prev) => [...prev, { ...data?.userUpdate }]);
   };
 
   const subscriptionQuery = `subscription{
-      createdUser{
-        user{
-          id
-          name
-          email
+        userUpdate{
+          action
+          user{
+            id
+            name
+            email
+          }
         }
       }
-    }
     `;
 
   const { unSubscribe } = useSubscription({
@@ -230,14 +231,15 @@ function HandleUsers() {
         </div>
       )}
 
-      {usersCreatedLog.length > 0 && (
+      {usersActionsLog.length > 0 && (
         <>
-          <h2 className="text-primary-300"> Created Users Subscription log</h2>
-          {usersCreatedLog.map((user, index) => (
+          <h2 className="text-primary-300"> Users actions log</h2>
+          {usersActionsLog.map((update, index) => (
             <div key={index}>
-              <h3>UserId: {user.id}</h3>
-              <p>name: {user.name}</p>
-              <p>email: {user.email}</p>
+              <h3>UserId: {update.user?.id}</h3>
+              <p>action: {update.action}</p>
+              <p>name: {update.user?.name}</p>
+              <p>email: {update.user?.email}</p>
             </div>
           ))}
         </>
