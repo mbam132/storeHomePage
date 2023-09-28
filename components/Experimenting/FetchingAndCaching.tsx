@@ -13,7 +13,7 @@ function FetchingAndCaching() {
   // 4. saving to state vars, 5. implementing cache on our own
   const queryClient = useQueryClient();
 
-  const { status, data, error, isFetching } = fetchPosts();
+  const { status, data, error, isFetching } = useFetchPosts();
   const [currentPostId, setCurrentPostId] = useState(-1);
 
   const renderPostsList = currentPostId === -1;
@@ -28,12 +28,7 @@ function FetchingAndCaching() {
         <>
           <h1>Posts</h1>
           {status === 'loading' && <p>Loading...</p>}
-          {status === 'error' && (
-            <>
-              <p>An error ocurred</p>
-              <p>{error.message}</p>
-            </>
-          )}
+          {status === 'error' && <p>An error ocurred</p>}
           {status === 'success' && (
             <>
               {data.slice(0, 10).map((post) => (
@@ -45,6 +40,7 @@ function FetchingAndCaching() {
                   </p>
                   <p>title: {post.title}</p>
                   <button
+                    type="button"
                     className="bg-primary-300 rounded p-1 text-white"
                     onClick={() => {
                       debouncedHandleSetPostId(post.id ?? -1);
@@ -71,7 +67,7 @@ function FetchingAndCaching() {
   );
 }
 
-function fetchPosts() {
+function useFetchPosts() {
   return useQuery({
     queryKey: ['posts'],
     queryFn: async () => {
@@ -84,11 +80,12 @@ function fetchPosts() {
 }
 
 function Post({ currentPostId, handleSetNoCurrentPost }) {
-  const { status, data, error, isFetching } = fetchPost(currentPostId);
+  const { status, data, error, isFetching } = useFetchPost(currentPostId);
 
   return (
     <>
       <button
+        type="button"
         className="bg-primary-300 rounded p-1 text-white"
         onClick={handleSetNoCurrentPost}
       >
@@ -96,12 +93,7 @@ function Post({ currentPostId, handleSetNoCurrentPost }) {
       </button>
 
       {status === 'loading' && <p>Loading...</p>}
-      {status === 'error' && (
-        <>
-          <p>An error ocurred</p>
-          <p>{error.message}</p>
-        </>
-      )}
+      {status === 'error' && <p>An error ocurred</p>}
       {status === 'success' && (
         <>
           <p>id: {data.userId}</p>
@@ -113,7 +105,7 @@ function Post({ currentPostId, handleSetNoCurrentPost }) {
   );
 }
 
-function fetchPost(postId) {
+function useFetchPost(postId) {
   return useQuery({
     queryKey: ['post', postId],
     queryFn: async () => {

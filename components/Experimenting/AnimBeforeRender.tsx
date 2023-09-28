@@ -1,8 +1,9 @@
 'use client';
+
 import React, { useRef, useLayoutEffect } from 'react';
 
 function AnimBeforeRender() {
-  //start an animation before the painting on the screen
+  // start an animation before the painting on the screen
   const elementRef = useRef(null);
   useLayoutEffect(() => {
     const secondsBeforeShowing: number = 8;

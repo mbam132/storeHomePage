@@ -10,14 +10,14 @@ function StateHandling() {
   });
 
   const increaseCounterByThree = () => {
-    //the way to chain setting state and have the
-    //state updated after each call
+    // the way to chain setting state and have the
+    // state updated after each call
     setCount((prev) => prev + 1);
     setCount((prev) => prev + 1);
     setCount((prev) => prev + 1);
 
-    //this will not make the count var increased by 3
-    //it will be increased by 1
+    // this will not make the count var increased by 3
+    // it will be increased by 1
     // setCount(count+1)
     // setCount(count+1)
     // setCount(count+1)
@@ -28,15 +28,15 @@ function StateHandling() {
   };
 
   const increaseAgeByThree = (e) => {
-    //the updater function receives the updated state
-    //param between calls
+    // the updater function receives the updated state
+    // param between calls
     setObj((prev) => ({ ...prev, age: +prev.age + 1 }));
     setObj((prev) => ({ ...prev, age: +prev.age + 1 }));
     setObj((prev) => ({ ...prev, age: +prev.age + 1 }));
   };
 
-  //with this way of maintaining 4 fields, you are not creating 4 different
-  //state vars each one with an updater method
+  // with this way of maintaining 4 fields, you are not creating 4 different
+  // state vars each one with an updater method
   const handleUpdateProperty = (e) => {
     setObj((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -46,6 +46,7 @@ function StateHandling() {
       <h3>Increase counter calling updater function 3 times</h3>
       <div className="d-flex">
         <button
+          type="button"
           className="bg-primary-300 rounded p-1 text-white"
           onClick={increaseCounterByThree}
         >
@@ -65,6 +66,7 @@ function StateHandling() {
 
       <h3>Increase age by 3 by calling updater function 3 times</h3>
       <button
+        type="button"
         className="bg-primary-300 rounded p-1 text-white"
         onClick={increaseAgeByThree}
       >

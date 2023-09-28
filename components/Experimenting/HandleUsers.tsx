@@ -62,7 +62,7 @@ function HandleUsers() {
         }
       `;
 
-      const requestResult = await request(GRAPHQL_REQUEST_URL, query);
+      const requestResult: any = await request(GRAPHQL_REQUEST_URL, query);
 
       const anErrorOcurred: boolean = !!requestResult.allUsers.message;
       if (anErrorOcurred) {
@@ -99,7 +99,10 @@ function HandleUsers() {
     `;
 
     try {
-      const requestResult = await request(GRAPHQL_REQUEST_URL, mutationQuery);
+      const requestResult: any = await request(
+        GRAPHQL_REQUEST_URL,
+        mutationQuery
+      );
 
       const anErrorOcurred: boolean = !!requestResult.createUser.message;
       if (anErrorOcurred) {
@@ -138,7 +141,10 @@ function HandleUsers() {
     `;
 
     try {
-      const requestResult = await request(GRAPHQL_REQUEST_URL, mutationQuery);
+      const requestResult: any = await request(
+        GRAPHQL_REQUEST_URL,
+        mutationQuery
+      );
 
       const anErrorOcurred: boolean = !!requestResult.deleteUser.message;
       if (anErrorOcurred) {
@@ -182,6 +188,7 @@ function HandleUsers() {
           />
           <div className="flex">
             <button
+              type="button"
               className="w-[140px] bg-primary-300"
               onClick={handleCreateUser}
             >
@@ -206,6 +213,7 @@ function HandleUsers() {
           />
           <div className="flex">
             <button
+              type="button"
               className="w-[140px] bg-primary-300"
               onClick={handleDeleteUser}
             >
@@ -217,7 +225,9 @@ function HandleUsers() {
         </div>
       </div>
 
-      <button onClick={handleFetchAllUsers}>Fetch all users</button>
+      <button type="button" onClick={handleFetchAllUsers}>
+        Fetch all users
+      </button>
       {allUsers.length > 0 && (
         <div>
           <h2 className="text-primary-300"> Fetched all users list</h2>

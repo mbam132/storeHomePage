@@ -21,7 +21,7 @@ function UseSubscription({ query, onReceivedMessage }) {
           {
             next: _onReceivedMessage,
             error: reject,
-            complete: resolve,
+            complete: () => resolve('subscription completed'),
           }
         );
       });

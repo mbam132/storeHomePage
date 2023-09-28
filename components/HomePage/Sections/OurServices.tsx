@@ -32,7 +32,7 @@ function OurServices({ services }: IProps) {
               className="w-[80px] h-[80px] "
               alt="Perro blanco y negro sonriente"
             />
-            <MaxiTitle1> {service.title}</MaxiTitle1>
+            <MaxiTitle1>{service.title}</MaxiTitle1>
             <p className="text-sm	text-black-1"> {service.description} </p>
           </div>
         ))}
