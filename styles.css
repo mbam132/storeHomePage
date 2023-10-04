@@ -18,7 +18,7 @@ body::-webkit-scrollbar {
 }
 
 #nprogress .bar {
-  background: #5145cd;
+  background: white;
   position: fixed;
   z-index: 1060;
   top: 0;
