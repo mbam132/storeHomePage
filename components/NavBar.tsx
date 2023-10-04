@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { SlLocationPin } from 'react-icons/sl';
 import DownArrow from '../assets/icons/downArrow.png';
@@ -7,6 +8,14 @@ import DownArrow from '../assets/icons/downArrow.png';
 function NavBar() {
   return (
     <nav className="w-screen bg-primary-300 fixed top-0	h-navbar flex flex-row">
+      <div>
+        <Link className="text-xs text-white mr-3" href="/experimenting">
+          Experiment Home
+        </Link>
+        <Link className="text-xs text-white" href="/create-todo">
+          Create Todo List
+        </Link>
+      </div>
       <div className="flex items-center ml-auto mr-5 gap-1">
         <a
           href="https://goo.gl/maps/KDy1EUg1akjSQjFA6"
