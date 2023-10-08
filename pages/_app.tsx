@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <NavBar />
       <Component {...pageProps} />
-      <BottomBar />
     </QueryClientProvider>
   );
 }

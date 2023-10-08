@@ -44,7 +44,9 @@ function SelectList({
     <div className="relative">
       <div
         className={`${
-          displayList ? 'border-primary-300 border-2' : 'border-gray border-2'
+          displayList
+            ? 'border-primary-300 border-2'
+            : 'border-gray-300 border-2'
         } w-fit	p-1 flex items-center	cursor-pointer`}
         onClick={toggleDisplayList}
         onKeyDown={() => {}}
@@ -59,16 +61,15 @@ function SelectList({
           ref={listRef}
         >
           {options.map((option) => (
-            <div
+            <button
               className="cursor-pointer p-[6px] hover:bg-primary-300"
               onClick={() => {
                 selectOption(option);
               }}
-              onKeyDown={() => {}}
-              role="presentation"
+              type="button"
             >
               {option}
-            </div>
+            </button>
           ))}
         </div>
       )}
