@@ -3,7 +3,6 @@
 @tailwind utilities;
 @tailwind variants;
 
-/* purgecss start ignore */
 html,
 body {
   font-family: 'Open Sans', sans-serif;
@@ -44,7 +43,7 @@ body::-webkit-scrollbar {
 }
 
 /* Remove these to get rid of the spinner */
-#nprogress .spinner {
+/* #nprogress .spinner {
   display: block;
   position: fixed;
   z-index: 1031;
@@ -64,7 +63,7 @@ body::-webkit-scrollbar {
 
   -webkit-animation: nprogress-spinner 400ms linear infinite;
   animation: nprogress-spinner 400ms linear infinite;
-}
+} */
 
 .nprogress-custom-parent {
   overflow: hidden;
@@ -76,7 +75,7 @@ body::-webkit-scrollbar {
   position: absolute;
 }
 
-@-webkit-keyframes nprogress-spinner {
+/* @-webkit-keyframes nprogress-spinner {
   0% {
     -webkit-transform: rotate(0deg);
   }
@@ -91,5 +90,12 @@ body::-webkit-scrollbar {
   100% {
     transform: rotate(360deg);
   }
+} */
+
+input[type='password']:focus {
+  box-shadow: none;
 }
-/* purgecss end ignore */
+
+input[type='text']:focus {
+  box-shadow: none;
+}

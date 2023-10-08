@@ -8,12 +8,15 @@ import DownArrow from '../assets/icons/downArrow.png';
 function NavBar() {
   return (
     <nav className="w-screen bg-primary-300 fixed top-0	h-navbar flex flex-row">
-      <div>
-        <Link className="text-xs text-white mr-3" href="/experimenting">
+      <div className="flex items-center gap-x-2.5">
+        <Link className="text-xs text-white" href="/experimenting">
           Experiment Home
         </Link>
         <Link className="text-xs text-white" href="/create-todo">
           Create Todo List
+        </Link>
+        <Link className="text-xs text-white" href="/sign-up">
+          Sign up
         </Link>
       </div>
       <div className="flex items-center ml-auto mr-5 gap-1">
