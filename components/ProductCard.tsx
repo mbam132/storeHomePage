@@ -5,7 +5,7 @@ import DogPawFilled from '../assets/images/dogPawFilled.png';
 import DogPawUnfilled from '../assets/images/dogPawUnfilled.png';
 import ShoppingCartIcon from '../assets/icons/shoppingCart.png';
 import { toUsd } from '../utils';
-import { IProduct } from '../types';
+import { IProduct } from '../utils/types';
 
 interface IProps {
   product: IProduct;

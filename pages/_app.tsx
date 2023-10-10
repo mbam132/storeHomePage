@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 import Router from 'next/router';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { UserProvider } from '../hooks/useUser';
 import NavBar from '../components/NavBar';
 import BottomBar from '../components/BottomBar';
 import '../styles.css';
@@ -26,11 +27,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
-      <Head>
-        <title>Prueba Front End</title>
-      </Head>
-      <NavBar />
-      <Component {...pageProps} />
+      <UserProvider>
+        <Head>
+          <title>Prueba Front End</title>
+        </Head>
+        <NavBar />
+        <Component {...pageProps} />
+      </UserProvider>
     </QueryClientProvider>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { request, gql } from 'graphql-request';
 import { useRouter } from 'next/navigation';
-import { GRAPHQL_REQUEST_URL } from '../../utils/constants';
+import GQLClient from '../../services/GQLClient';
 import SelectList from './SelectList';
 
 import useGQLQuery from '../../hooks/useGQLQuery';
@@ -58,7 +57,7 @@ function CreateTodoList() {
     }
     `;
 
-    const requestResult: any = await request(GRAPHQL_REQUEST_URL, mutation);
+    const requestResult: any = await GQLClient.request(mutation);
 
     const anErrorOcurred: boolean = !!requestResult.createTodo.message;
 

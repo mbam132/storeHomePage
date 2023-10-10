@@ -4,7 +4,7 @@ import MaxiSubtitle1 from '../../Titles/MaxiSubtitle1';
 import MaxiUpperCaseTitle from '../../Titles/MaxiUpperCaseTitle';
 import BlackAndWhiteDog from '../../../assets/images/blackAndWhiteDog.png';
 import MaxiTitle1 from '../../Titles/MaxiTitle1';
-import { IService } from '../../../types';
+import { IService } from '../../../utils/types';
 
 interface IProps {
   services: IService[];

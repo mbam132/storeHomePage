@@ -6,7 +6,7 @@ import LastProducts from '../components/HomePage/Sections/LastProducts';
 import OurServices from '../components/HomePage/Sections/OurServices';
 import FriendBrands from '../components/HomePage/Sections/FriendBrands';
 import Footer from '../components/Footer';
-import { IProduct, IService } from '../types';
+import { IProduct, IService } from '../utils/types';
 
 function HomePage() {
   const outStandingProducts: IProduct[] = [

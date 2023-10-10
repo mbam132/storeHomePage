@@ -9,9 +9,9 @@ function PasswordInput({ label, value, setValue }) {
   };
 
   return (
-    <div className=" border-none w-fit flex flex-col">
+    <div className="border-none w-fit flex items-center">
       <label>{label}</label>
-      <div className="flex">
+      <div className="flex ml-2">
         <input
           name="password"
           placeholder="Password"

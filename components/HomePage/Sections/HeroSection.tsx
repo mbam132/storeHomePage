@@ -11,7 +11,7 @@ import PetIcon from '../../../assets/icons/petIcon.png';
 import ShoppingCartIcon from '../../../assets/icons/shoppingCartWithRedIcon.png';
 import HeroImage from '../../../assets/images/heroImage.png';
 import BlackWhiteDog from '../../../assets/images/blackAndWhiteDog.png';
-import { IOption } from '../../../types';
+import { IOption } from '../../../utils/types';
 
 function HeroSection() {
   const menuOptions: IOption[] = [

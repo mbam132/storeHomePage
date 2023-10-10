@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { request, gql } from 'graphql-request';
+import GQLClient from '../../services/GQLClient';
 import useSubscription from '../../hooks/useSubscription';
 import { GRAPHQL_REQUEST_URL } from '../../utils/constants';
 
@@ -62,7 +62,7 @@ function HandleUsers() {
         }
       `;
 
-      const requestResult: any = await request(GRAPHQL_REQUEST_URL, query);
+      const requestResult: any = await GQLClient.request(query);
 
       const anErrorOcurred: boolean = !!requestResult.allUsers.message;
       if (anErrorOcurred) {
@@ -80,9 +80,10 @@ function HandleUsers() {
   };
 
   const handleCreateUser = async () => {
-    const mutationQuery = gql`
+    const mutationName = 'createUser';
+    const mutationQuery = `
      mutation {
-      createUser(data: {name: "${userToCreate.name}",
+      ${mutationName}(data: {name: "${userToCreate.name}",
       email: "${userToCreate.email}"}){
         ...on Error{
           message
@@ -99,14 +100,11 @@ function HandleUsers() {
     `;
 
     try {
-      const requestResult: any = await request(
-        GRAPHQL_REQUEST_URL,
-        mutationQuery
-      );
+      const requestResult: any = await GQLClient.request(mutationQuery);
 
-      const anErrorOcurred: boolean = !!requestResult.createUser.message;
+      const anErrorOcurred: boolean = !!requestResult[mutationName].message;
       if (anErrorOcurred) {
-        throw new Error(requestResult.createUser.message);
+        throw new Error(requestResult[mutationName].message);
       }
 
       setUserToCreate({ name: '', email: '' });
@@ -122,9 +120,10 @@ function HandleUsers() {
   };
 
   const handleDeleteUser = async () => {
-    const mutationQuery = gql`
+    const mutationName = 'deleteUser';
+    const mutationQuery = `
     mutation{
-      deleteUser(email: "${userToDeleteEmail}"){
+      ${mutationName}(email: "${userToDeleteEmail}"){
         ... on Error{
           message
         }
@@ -141,14 +140,11 @@ function HandleUsers() {
     `;
 
     try {
-      const requestResult: any = await request(
-        GRAPHQL_REQUEST_URL,
-        mutationQuery
-      );
+      const requestResult: any = await GQLClient.request(mutationQuery);
 
-      const anErrorOcurred: boolean = !!requestResult.deleteUser.message;
+      const anErrorOcurred: boolean = !!requestResult[mutationName].message;
       if (anErrorOcurred) {
-        throw new Error(requestResult.deleteUser.message);
+        throw new Error(requestResult[mutationName].message);
       }
       setUserToDeleteEmail('');
       setDisplayUserDeletedMessage(true);

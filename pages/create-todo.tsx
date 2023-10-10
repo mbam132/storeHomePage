@@ -1,4 +1,5 @@
 import React from 'react';
+import ProtectedRoute from '../components/ProtectedRoute';
 import CreateTodoList from '../components/Experimenting/CreateTodoList';
 
 function CreateTodo() {
@@ -9,4 +10,4 @@ function CreateTodo() {
   );
 }
 
-export default CreateTodo;
+export default () => <ProtectedRoute component={CreateTodo} />;

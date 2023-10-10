@@ -6,7 +6,7 @@ import MaxiUpperCaseTitle from '../../Titles/MaxiUpperCaseTitle';
 import MaxiSubtitle1 from '../../Titles/MaxiSubtitle1';
 import BottomLeftPic from '../../../assets/images/middleSizedDogEating.jpeg';
 import BottomRightPic from '../../../assets/images/dogFoodInFloor.jpeg';
-import { IProduct } from '../../../types';
+import { IProduct } from '../../../utils/types';
 
 interface IProps {
   products: IProduct[];

@@ -4,7 +4,7 @@ import MaxiUpperCaseTitle from '../../Titles/MaxiUpperCaseTitle';
 import MaxiSubtitle1 from '../../Titles/MaxiSubtitle1';
 import ProductCard from '../../ProductCard';
 import ImageToTheRight from '../../../assets/images/catEating.png';
-import { IProduct } from '../../../types';
+import { IProduct } from '../../../utils/types';
 
 interface IProps {
   products: IProduct[];

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { request } from 'graphql-request';
-import { GRAPHQL_REQUEST_URL } from '../utils/constants';
 import PasswordInput from './PasswordInput';
+import GQLClient from '../services/GQLClient';
 
 function SignUp() {
   const secondsToShowSuccessMessage = 30;
@@ -15,6 +14,7 @@ function SignUp() {
   });
 
   const handleInputValueChange = (event) => {
+    setErrorMessage('');
     setInputValues((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -48,7 +48,7 @@ function SignUp() {
     }
     `;
 
-    const requestResult: any = await request(GRAPHQL_REQUEST_URL, mutation);
+    const requestResult: any = await GQLClient.request(mutation);
 
     const anErrorOcurred: boolean = !!requestResult[mutationName].message;
 
@@ -77,26 +77,30 @@ function SignUp() {
     );
   }
   return (
-    <div className="p-3">
+    <div className="p-3 flex flex-col gap-y-2.5">
       <h1 className="underline text-primary-300 text-xl">Sign up</h1>
 
-      <label>Name</label>
-      <input
-        name="name"
-        value={inputValues.name}
-        onChange={handleInputValueChange}
-        placeholder="Name"
-        className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none "
-      />
+      <div>
+        <label>Name</label>
+        <input
+          name="name"
+          value={inputValues.name}
+          onChange={handleInputValueChange}
+          placeholder="Name"
+          className="w-[150px] p-1.5 ml-2 border-gray-300 border-2 focus:border-primary-300 focus:outline-none "
+        />
+      </div>
 
-      <label>Email</label>
-      <input
-        name="email"
-        value={inputValues.email}
-        onChange={handleInputValueChange}
-        placeholder="Email"
-        className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none "
-      />
+      <div>
+        <label>Email</label>
+        <input
+          name="email"
+          value={inputValues.email}
+          onChange={handleInputValueChange}
+          placeholder="Email"
+          className="w-[150px] p-1.5 ml-2 border-gray-300 border-2 focus:border-primary-300 focus:outline-none "
+        />
+      </div>
 
       <PasswordInput
         label="Password"
@@ -106,6 +110,7 @@ function SignUp() {
 
       <button
         onClick={handleSubmit}
+        disabled={errorMessage !== ''}
         className="mt-4 w-fit p-1.5 bg-primary-300"
         type="button"
       >

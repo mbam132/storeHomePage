@@ -1,3 +1,9 @@
+export interface IUser {
+  name: string;
+  email: string;
+  authScope: string;
+}
+
 export interface IProduct {
   title: string;
   rating: number;

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { request, gql } from 'graphql-request';
-
-import { GRAPHQL_REQUEST_URL } from '../utils/constants';
+import GQLClient from '../services/GQLClient';
 
 function useGQLQuery({ query, queryName }) {
   const [queryData, setQueryData] = useState(null);
@@ -10,7 +8,7 @@ function useGQLQuery({ query, queryName }) {
   useEffect(() => {
     (async () => {
       try {
-        const requestResult: any = await request(GRAPHQL_REQUEST_URL, query);
+        const requestResult: any = await GQLClient.request(query);
 
         const anErrorOcurred: boolean = !!requestResult[queryName].message;
         if (anErrorOcurred) {

@@ -57,7 +57,7 @@ function SelectList({
       </div>
       {displayList && (
         <div
-          className="w-fit absolute	top-[19px] left-[14px] bg-white"
+          className="w-fit absolute	top-[19px] left-[14px] bg-white flex flex-col"
           ref={listRef}
         >
           {options.map((option) => (
