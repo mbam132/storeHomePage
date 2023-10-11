@@ -5,10 +5,12 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import ProtectedRoute from '../components/ProtectedRoute';
 // import AnimBeforeRender from '../components/Experimenting/AnimBeforeRender';
 // import FetchingAndCaching from '../components/Experimenting/FetchingAndCaching';
 // import StateHandling from '../components/Experimenting/StateHandling';
 import HandleUsers from '../components/Experimenting/HandleUsers';
+import { IUserScope } from '../utils/types';
 
 function Experimenting() {
   return (
@@ -20,4 +22,7 @@ function Experimenting() {
     </div>
   );
 }
-export default Experimenting;
+
+export default () => (
+  <ProtectedRoute component={Experimenting} authScope={IUserScope.SUPERUSER} />
+);

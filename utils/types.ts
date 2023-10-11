@@ -19,3 +19,8 @@ export interface IService {
   title: string;
   description: string;
 }
+
+export enum IUserScope {
+  SUPERUSER = 'SUPERUSER',
+  PLAINUSER = 'PLAINUSER',
+}

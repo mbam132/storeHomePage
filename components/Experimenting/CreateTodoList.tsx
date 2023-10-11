@@ -112,7 +112,6 @@ function CreateTodoList() {
           className="w-[150px] border-gray-300 border-2 focus:border-primary-300 focus:outline-none ml-2"
         />
       </div>
-
       <div>
         <label>User's email:</label>
         <SelectList

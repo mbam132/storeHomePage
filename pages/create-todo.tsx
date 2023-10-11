@@ -1,6 +1,7 @@
 import React from 'react';
 import ProtectedRoute from '../components/ProtectedRoute';
 import CreateTodoList from '../components/Experimenting/CreateTodoList';
+import { IUserScope } from '../utils/types';
 
 function CreateTodo() {
   return (
@@ -10,4 +11,6 @@ function CreateTodo() {
   );
 }
 
-export default () => <ProtectedRoute component={CreateTodo} />;
+export default () => (
+  <ProtectedRoute component={CreateTodo} authScope={IUserScope.PLAINUSER} />
+);

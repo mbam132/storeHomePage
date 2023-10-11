@@ -7,10 +7,11 @@ import { useRouter } from 'next/navigation';
 // import DownArrow from '../assets/icons/downArrow.png';
 import useUser from '../hooks/useUser';
 import useAuth from '../hooks/useAuth';
+import { IUserScope } from '../utils/types';
 
 function NavBar() {
   const router = useRouter();
-  const { loggedIn } = useUser();
+  const { loggedIn, user } = useUser();
   const { logOut } = useAuth();
 
   const handleLogOut = () => {
@@ -21,9 +22,12 @@ function NavBar() {
   return (
     <nav className="w-screen bg-primary-300 fixed top-0	h-navbar flex flex-row">
       <div className="flex items-center gap-x-2.5">
-        <Link className="text-xs text-white" href="/experimenting">
-          Experiment Home
-        </Link>
+        {user?.authScope === IUserScope.SUPERUSER && (
+          <Link className="text-xs text-white" href="/experimenting">
+            Experiment Home
+          </Link>
+        )}
+
         {loggedIn && (
           <Link className="text-xs text-white" href="/create-todo">
             Create Todo List
