@@ -6,6 +6,36 @@ import useUser from './useUser';
 function useAuth() {
   const { setUser } = useUser();
 
+  const signUp = async (email: string, password: string, name: string) => {
+    const mutationName = 'signUp';
+    const mutation = `
+      mutation {
+        ${mutationName}(email: "${email}", password: "${password}", name: "${name}"){
+          ...on Error{
+            message
+          }
+
+          ...on MutationSignUpSuccess{
+            data{
+              email
+            }
+          }
+        }
+      }
+    `;
+    const requestResult: any = await GQLClient.request(mutation);
+
+    const anErrorOcurred: boolean = !!requestResult[mutationName].message;
+
+    if (anErrorOcurred) {
+      throw new Error(requestResult[mutationName].message);
+    }
+
+    const userCreated = requestResult[mutationName].data;
+
+    return userCreated;
+  };
+
   const login = async (email: string, password: string) => {
     const mutationName = 'login';
     const mutation = `
@@ -51,7 +81,7 @@ function useAuth() {
     GQLClient.setHeader('authorization', '');
   };
 
-  return { login, logOut };
+  return { login, logOut, signUp };
 }
 
 export default useAuth;

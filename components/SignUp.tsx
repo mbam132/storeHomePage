@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PasswordInput from './PasswordInput';
 import GQLClient from '../services/GQLClient';
+import useAuth from '../hooks/useAuth';
 
 function SignUp() {
+  const { signUp } = useAuth();
   const secondsToShowSuccessMessage = 30;
 
   const [userCreated, setUserCreated] = useState(false);
@@ -31,33 +33,18 @@ function SignUp() {
       return;
     }
 
-    const mutationName = 'signUp';
-    const mutation = `
-      mutation {
-        ${mutationName}(email: "${inputValues.email}", password: "${inputValues.password}", name: "${inputValues.name}" )
-      {
-        ...on Error {
-          message
-        }
-        ...on MutationSignUpSuccess {
-          data{
-            email
-          }
-        }
-      }
-    }
-    `;
-
-    const requestResult: any = await GQLClient.request(mutation);
-
-    const anErrorOcurred: boolean = !!requestResult[mutationName].message;
-
-    if (anErrorOcurred) {
-      setErrorMessage(requestResult[mutationName].message);
-      return;
+    let createdUser;
+    try {
+      createdUser = await signUp(
+        inputValues.email,
+        inputValues.password,
+        inputValues.name
+      );
+    } catch (error) {
+      setErrorMessage(error.message);
     }
 
-    if (requestResult[mutationName].data.email) {
+    if (createdUser.email) {
       setUserCreated(true);
       setInputValues({ name: '', email: '', password: '' });
 

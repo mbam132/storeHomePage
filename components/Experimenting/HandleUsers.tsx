@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
 import GQLClient from '../../services/GQLClient';
 import useSubscription from '../../hooks/useSubscription';
-import { GRAPHQL_REQUEST_URL } from '../../utils/constants';
+import useAuth from '../../hooks/useAuth';
 
 function HandleUsers() {
+  const { signUp } = useAuth();
   const secondsToDisplayData: number = 9;
   const [allUsers, setAllUsers] = useState([]);
 
-  const [userToDeleteEmail, setUserToDeleteEmail] = useState('');
+  const [userToCreate, setUserToCreate] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-  const [userToCreate, setUserToCreate] = useState({ name: '', email: '' });
   const handleSetUserToCreate = (e) => {
     setUserToCreate((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const [userToDeleteEmail, setUserToDeleteEmail] = useState('');
 
   const [displayUserCreatedMessage, setDisplayUserCreatedMessage] =
     useState(false);
@@ -80,42 +86,21 @@ function HandleUsers() {
   };
 
   const handleCreateUser = async () => {
-    const mutationName = 'createUser';
-    const mutationQuery = `
-     mutation {
-      ${mutationName}(data: {name: "${userToCreate.name}",
-      email: "${userToCreate.email}"}){
-        ...on Error{
-          message
-        }
-        ...on MutationCreateUserSuccess{
-          data {
-            id
-            name
-            email
-          }
-        }
-      }
-    }
-    `;
-
     try {
-      const requestResult: any = await GQLClient.request(mutationQuery);
+      await signUp(
+        userToCreate.email,
+        userToCreate.password,
+        userToCreate.name
+      );
 
-      const anErrorOcurred: boolean = !!requestResult[mutationName].message;
-      if (anErrorOcurred) {
-        throw new Error(requestResult[mutationName].message);
-      }
-
-      setUserToCreate({ name: '', email: '' });
+      setUserToCreate({ name: '', email: '', password: '' });
       setDisplayUserCreatedMessage(true);
 
       setTimeout(() => {
         setDisplayUserCreatedMessage(false);
       }, secondsToDisplayData * 1000);
     } catch (error) {
-      console.log('An error ocurred creating the user');
-      console.log(error);
+      console.error(error.message);
     }
   };
 
@@ -160,7 +145,7 @@ function HandleUsers() {
 
   return (
     <div className="flex flex-col">
-      <h2>The users</h2>
+      <h2>Users admin panel</h2>
 
       <div className="flex">
         <div className="flex flex-col">
@@ -180,6 +165,14 @@ function HandleUsers() {
             name="email"
             placeholder="Email"
             value={userToCreate.email}
+            onChange={handleSetUserToCreate}
+          />
+          <input
+            className="w-[140px]"
+            type="text"
+            name="password"
+            placeholder="Password"
+            value={userToCreate.password}
             onChange={handleSetUserToCreate}
           />
           <div className="flex">
