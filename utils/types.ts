@@ -1,7 +1,8 @@
 export interface IUser {
-  name: string;
-  email: string;
-  authScope: string;
+  name?: string;
+  email?: string;
+  authScope?: string;
+  id?: string;
 }
 
 export interface IProduct {

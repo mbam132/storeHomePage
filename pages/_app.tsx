@@ -6,7 +6,6 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { UserProvider } from '../hooks/useUser';
 import NavBar from '../components/NavBar';
-import BottomBar from '../components/BottomBar';
 import '../styles.css';
 
 const queryClient = new QueryClient();

@@ -20,10 +20,10 @@ function ProtectedRoute({ component, authScope }: IProps) {
     );
   }
 
-  const userScopeMatchesWithRouteScope: boolean = user?.authScope === authScope;
+  const scopeMatch: boolean = user?.authScope === authScope;
   const userIsSuperUser: boolean = user?.authScope === IUserScope.SUPERUSER;
 
-  if (!(user && (userScopeMatchesWithRouteScope || userIsSuperUser))) {
+  if (!(user && (scopeMatch || userIsSuperUser))) {
     router.push('/login');
   } else {
     const Component = component;

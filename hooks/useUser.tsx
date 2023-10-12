@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { verifyToken } from '../services/authService';
 import { JWT_LOCAL_STORAGE_KEY } from '../utils/constants';
 import { IUser } from '../utils/types';
+import GQLClient from '../services/GQLClient';
 
 interface IContext {
   user: IUser;
@@ -29,6 +30,8 @@ export const UserProvider = ({ children }) => {
 
     try {
       const user = await verifyToken(savedToken);
+
+      GQLClient.setHeader('authorization', `Bearer ${savedToken}`);
       setUser({ ...user });
     } catch (error) {
       //token not valid or expired

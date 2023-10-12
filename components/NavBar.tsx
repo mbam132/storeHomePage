@@ -1,6 +1,6 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 // import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 // import { SlLocationPin } from 'react-icons/sl';
@@ -10,6 +10,8 @@ import useAuth from '../hooks/useAuth';
 import { IUserScope } from '../utils/types';
 
 function NavBar() {
+  const currentPage = usePathname();
+
   const router = useRouter();
   const { loggedIn, user } = useUser();
   const { logOut } = useAuth();
@@ -21,26 +23,27 @@ function NavBar() {
 
   return (
     <nav className="w-screen bg-primary-300 fixed top-0	h-navbar flex flex-row">
-      <div className="flex items-center gap-x-2.5">
-        {user?.authScope === IUserScope.SUPERUSER && (
-          <Link className="text-xs text-white" href="/experimenting">
-            Experiment Home
+      <div className="flex items-center ml-1 gap-x-2.5">
+        {user?.authScope === IUserScope.SUPERUSER &&
+          currentPage !== '/experimenting' && (
+            <Link className="text-xs text-white" href="/experimenting">
+              Experiment
+            </Link>
+          )}
+
+        {loggedIn && currentPage !== '/tasks-menu' && (
+          <Link className="text-xs text-white" href="/tasks-menu">
+            Tasks menu
           </Link>
         )}
 
-        {loggedIn && (
-          <Link className="text-xs text-white" href="/create-todo">
-            Create Todo List
-          </Link>
-        )}
-
-        {!loggedIn && (
+        {!loggedIn && currentPage !== '/login' && (
           <Link className="text-xs text-white" href="/login">
             Login
           </Link>
         )}
 
-        {!loggedIn && (
+        {!loggedIn && currentPage !== '/sign-up' && (
           <Link className="text-xs text-white" href="/sign-up">
             Sign up
           </Link>

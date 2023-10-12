@@ -145,13 +145,13 @@ function HandleUsers() {
 
   return (
     <div className="flex flex-col">
-      <h2>Users admin panel</h2>
+      <h2 className="text-2xl">Users admin panel</h2>
 
       <div className="flex">
-        <div className="flex flex-col">
-          <h3>Create a user</h3>
+        <div className="flex flex-col gap-y-2.5">
+          <h3>Create user</h3>
           <input
-            className="w-[140px]"
+            className="w-[140px] rounded-md"
             type="text"
             name="name"
             placeholder="Name"
@@ -160,7 +160,7 @@ function HandleUsers() {
           />
 
           <input
-            className="w-[140px]"
+            className="w-[140px] rounded-md"
             type="text"
             name="email"
             placeholder="Email"
@@ -168,7 +168,7 @@ function HandleUsers() {
             onChange={handleSetUserToCreate}
           />
           <input
-            className="w-[140px]"
+            className="w-[140px] rounded-md"
             type="text"
             name="password"
             placeholder="Password"
@@ -178,7 +178,7 @@ function HandleUsers() {
           <div className="flex">
             <button
               type="button"
-              className="w-[140px] bg-primary-300"
+              className="w-[140px] bg-primary-300 rounded-md p-1.5"
               onClick={handleCreateUser}
             >
               Create
@@ -188,10 +188,10 @@ function HandleUsers() {
           {displayUserCreatedMessage && <span>The user was created</span>}
         </div>
 
-        <div className="flex flex-col ml-[160px]">
+        <div className="flex flex-col ml-[160px] gap-y-2.5">
           <h3>Delete a user</h3>
           <input
-            className="w-[140px]"
+            className="w-[140px] rounded-md"
             type="text"
             name="email"
             placeholder="Email"
@@ -203,7 +203,7 @@ function HandleUsers() {
           <div className="flex">
             <button
               type="button"
-              className="w-[140px] bg-primary-300"
+              className="w-[140px] bg-primary-300 rounded-md p-1.5"
               onClick={handleDeleteUser}
             >
               Delete
@@ -214,25 +214,22 @@ function HandleUsers() {
         </div>
       </div>
 
-      <button type="button" onClick={handleFetchAllUsers}>
+      <button
+        type="button"
+        className="bg-primary-300 mb-2.5 w-fit mx-auto p-1.5 rounded-md"
+        onClick={handleFetchAllUsers}
+      >
         Fetch all users
       </button>
-      {allUsers.length > 0 && (
-        <div>
-          <h2 className="text-primary-300"> Fetched all users list</h2>
-          {allUsers.map((user, index) => (
-            <div key={index} className="mb-[8px]">
-              <h3>UserId: {user.id}</h3>
-              <p>name: {user.name}</p>
-              <p>email: {user.email}</p>
-            </div>
-          ))}
-        </div>
-      )}
 
+      <h2 className="text-primary-300 "> Users actions log</h2>
+      {usersActionsLog.length === 0 && (
+        <p className="text-xs	">
+          you'll see data once a user is created/deleted/loggedin
+        </p>
+      )}
       {usersActionsLog.length > 0 && (
         <>
-          <h2 className="text-primary-300"> Users actions log</h2>
           {usersActionsLog.map((update, index) => (
             <div key={index}>
               <h3>UserId: {update.user?.id}</h3>
@@ -242,6 +239,23 @@ function HandleUsers() {
             </div>
           ))}
         </>
+      )}
+
+      <h2 className="text-primary-300">All user's list</h2>
+
+      {allUsers.length === 0 && (
+        <p className="text-xs	">Click on "Fetch all users" to see the list</p>
+      )}
+      {allUsers.length > 0 && (
+        <div>
+          {allUsers.map((user, index) => (
+            <div key={index} className="mb-[8px]">
+              <h3>UserId: {user.id}</h3>
+              <p>name: {user.name}</p>
+              <p>email: {user.email}</p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

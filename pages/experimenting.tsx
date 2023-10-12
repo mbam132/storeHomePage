@@ -14,7 +14,7 @@ import { IUserScope } from '../utils/types';
 
 function Experimenting() {
   return (
-    <div className="mt-navbar mb-[40%]">
+    <div className="mt-navbar mb-[40%] p-3">
       {/* <AnimBeforeRender/> */}
       {/* <FetchingAndCaching /> */}
       {/* <StateHandling /> */}

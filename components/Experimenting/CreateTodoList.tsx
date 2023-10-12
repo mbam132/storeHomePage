@@ -2,46 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import GQLClient from '../../services/GQLClient';
 import SelectList from './SelectList';
-
+import useUser from '../../hooks/useUser';
 import useGQLQuery from '../../hooks/useGQLQuery';
+import useOnKeyPress from '../../hooks/useOnKeyPress';
 
 function CreateTodoList() {
   const router = useRouter();
+  const { user } = useUser();
 
-  const queryName = 'allUsers';
-  const query = `
-        {
-          ${queryName} {
-            ... on Error {
-              message
-            }
-
-            ... on QueryAllUsersSuccess {
-              data {
-                email
-              }
-            }
-          }
-        }
-      `;
-  const { queryData, queryErrorMessage } = useGQLQuery({
-    query,
-    queryName,
-  });
-  const [listOfEmails, setListOfEmails] = useState([]);
   const [todoListName, setTodoListName] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
-
-  useEffect(() => {
-    if (queryData?.data?.length > 0 && !queryErrorMessage) {
-      setListOfEmails(queryData.data.map(({ email }) => email));
-    }
-  }, [queryData]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateTodo = async () => {
     const mutation = `
       mutation {
-        createTodo(data: {name: "${todoListName}", userEmail: "${selectedOption}" })
+        createTodo(data: {name: "${todoListName}", userEmail: "${user.email}" })
       {
         ...on Error {
           message
@@ -57,79 +32,48 @@ function CreateTodoList() {
     }
     `;
 
+    setIsLoading(true);
+
     const requestResult: any = await GQLClient.request(mutation);
 
-    const anErrorOcurred: boolean = !!requestResult.createTodo.message;
+    // const anErrorOcurred: boolean = !!requestResult.createTodo.message;
 
-    if (anErrorOcurred) {
-      return;
-    }
-
-    router.push('/experimenting');
+    setTodoListName('');
+    setIsLoading(false);
+    // if (anErrorOcurred) {
+    //   return;
+    // }
   };
 
-  const errorFetchingEmails: boolean = queryErrorMessage.length > 0;
-  if (errorFetchingEmails) {
-    return (
-      <div>
-        <h1>An error ocurred, please try again later</h1>
-        <p>{queryErrorMessage}</p>
-      </div>
-    );
-  }
-
-  const noUsersOnDatabase: boolean = queryData?.data?.length === 0;
-  if (noUsersOnDatabase) {
-    return (
-      <div>
-        <h1>Can not create a todo list at the moment</h1>
-        <p>No users on the database</p>
-      </div>
-    );
-  }
-
-  const isLoading: boolean = queryData === null && queryErrorMessage === '';
-
-  if (isLoading) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
-  }
+  useOnKeyPress({
+    keyName: 'Enter',
+    callback: handleCreateTodo,
+  });
 
   return (
-    <div>
-      <h1 className="text-2xl">Create a Todo List</h1>
+    <div className="flex flex-col gap-y-2.5">
+      <h1 className="text-2xl">Create a task</h1>
 
       <div>
-        <label>Name:</label>
         <input
-          id="todoListNameInput"
-          placeholder=""
+          type="text"
+          placeholder="Name"
           value={todoListName}
           onChange={(e) => setTodoListName(e.target.value)}
-          className="w-[150px] border-gray-300 border-2 focus:border-primary-300 focus:outline-none ml-2"
+          className="w-[150px]  focus:border-primary-300 focus:outline-none rounded-md mb-0.5"
         />
       </div>
-      <div>
-        <label>User's email:</label>
-        <SelectList
-          placeHolder="Select user's email"
-          options={listOfEmails}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
+      <div className="flex items-center gap-x-2">
+        <button
+          disabled={todoListName === ''}
+          type="button"
+          className="bg-primary-300 p-1.5 rounded-md w-fit"
+          onClick={handleCreateTodo}
+        >
+          Submit
+        </button>
+        {isLoading && <div className="loading-spinner" />}
       </div>
-
-      <button
-        disabled={selectedOption === '' || todoListName === ''}
-        type="button"
-        className="bg-primary-300 p-1 mt-2"
-        onClick={handleCreateTodo}
-      >
-        Create
-      </button>
     </div>
   );
 }

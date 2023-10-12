@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import PasswordInput from './PasswordInput';
 import GQLClient from '../services/GQLClient';
 import useAuth from '../hooks/useAuth';
+import useOnKeyPress from '../hooks/useOnKeyPress';
 
 function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
   const { signUp } = useAuth();
   const secondsToShowSuccessMessage = 30;
 
@@ -33,6 +35,8 @@ function SignUp() {
       return;
     }
 
+    setIsLoading(true);
+
     let createdUser;
     try {
       createdUser = await signUp(
@@ -42,6 +46,8 @@ function SignUp() {
       );
     } catch (error) {
       setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
     }
 
     if (createdUser.email) {
@@ -54,6 +60,11 @@ function SignUp() {
     }
   };
 
+  useOnKeyPress({
+    keyName: 'Enter',
+    callback: handleSubmit,
+  });
+
   if (userCreated) {
     return (
       <div className="p-3">
@@ -64,45 +75,45 @@ function SignUp() {
     );
   }
   return (
-    <div className="p-3 flex flex-col gap-y-2.5">
-      <h1 className="underline text-primary-300 text-xl">Sign up</h1>
+    <div className="flex flex-col gap-y-2.5">
+      <h1 className="text-2xl">Sign up</h1>
 
       <div>
-        <label>Name</label>
         <input
           name="name"
           value={inputValues.name}
           onChange={handleInputValueChange}
           placeholder="Name"
-          className="w-[150px] p-1.5 ml-2 border-gray-300 border-2 focus:border-primary-300 focus:outline-none "
+          className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
         />
       </div>
 
       <div>
-        <label>Email</label>
         <input
           name="email"
           value={inputValues.email}
           onChange={handleInputValueChange}
           placeholder="Email"
-          className="w-[150px] p-1.5 ml-2 border-gray-300 border-2 focus:border-primary-300 focus:outline-none "
+          className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
         />
       </div>
 
       <PasswordInput
-        label="Password"
         setValue={handleInputValueChange}
         value={inputValues.password}
       />
 
-      <button
-        onClick={handleSubmit}
-        disabled={errorMessage !== ''}
-        className="mt-4 w-fit p-1.5 bg-primary-300"
-        type="button"
-      >
-        Sign up
-      </button>
+      <div className="flex items-center gap-x-2">
+        <button
+          onClick={handleSubmit}
+          disabled={errorMessage !== ''}
+          className="w-fit p-1.5 bg-primary-300 rounded-md"
+          type="button"
+        >
+          Submit
+        </button>
+        {isLoading && <div className="loading-spinner" />}
+      </div>
 
       {errorMessage !== '' && (
         <p className="mt-1 text-sm text-primary-300">{errorMessage}</p>

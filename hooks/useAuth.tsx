@@ -2,11 +2,16 @@ import React from 'react';
 import GQLClient from '../services/GQLClient';
 import { JWT_LOCAL_STORAGE_KEY } from '../utils/constants';
 import useUser from './useUser';
+import { IUser } from '../utils/types';
 
 function useAuth() {
   const { setUser } = useUser();
 
-  const signUp = async (email: string, password: string, name: string) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    name: string
+  ): Promise<IUser> => {
     const mutationName = 'signUp';
     const mutation = `
       mutation {
@@ -31,12 +36,12 @@ function useAuth() {
       throw new Error(requestResult[mutationName].message);
     }
 
-    const userCreated = requestResult[mutationName].data;
+    const userCreated: IUser = requestResult[mutationName].data;
 
     return userCreated;
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<IUser> => {
     const mutationName = 'login';
     const mutation = `
         mutation {
@@ -70,9 +75,11 @@ function useAuth() {
     GQLClient.setHeader('authorization', `Bearer ${token}`);
     window.localStorage.setItem(JWT_LOCAL_STORAGE_KEY, token);
 
-    const user = requestResult[mutationName].data.user;
+    const user: IUser = requestResult[mutationName].data.user;
 
     setUser({ ...user });
+
+    return user;
   };
 
   const logOut = () => {

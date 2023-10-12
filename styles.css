@@ -99,3 +99,22 @@ input[type='password']:focus {
 input[type='text']:focus {
   box-shadow: none;
 }
+
+.loading-spinner {
+  border: 3px solid theme(colors.primary.300);
+  border-left-color: transparent;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  animation: spinnerAnimation 0.5s linear infinite;
+}
+
+@keyframes spinnerAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
