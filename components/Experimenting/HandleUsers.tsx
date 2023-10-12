@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import GQLClient from '../../services/GQLClient';
 import useSubscription from '../../hooks/useSubscription';
 import useAuth from '../../hooks/useAuth';
+import useExecutionInterval from '../../hooks/useExecutionInterval';
+import { msIntervalBetweenCalls } from '../../utils/constants';
 
 function HandleUsers() {
   const { signUp } = useAuth();
@@ -85,6 +87,11 @@ function HandleUsers() {
     }
   };
 
+  const { intervaledCallback: intervaledFetchAllUsers } = useExecutionInterval({
+    ms: msIntervalBetweenCalls,
+    callback: handleFetchAllUsers,
+  });
+
   const handleCreateUser = async () => {
     try {
       await signUp(
@@ -103,6 +110,11 @@ function HandleUsers() {
       console.error(error.message);
     }
   };
+
+  const { intervaledCallback: intervaledCreateUser } = useExecutionInterval({
+    ms: msIntervalBetweenCalls,
+    callback: handleCreateUser,
+  });
 
   const handleDeleteUser = async () => {
     const mutationName = 'deleteUser';
@@ -143,6 +155,11 @@ function HandleUsers() {
     }
   };
 
+  const { intervaledCallback: intervaledDeleteUser } = useExecutionInterval({
+    ms: msIntervalBetweenCalls,
+    callback: handleDeleteUser,
+  });
+
   return (
     <div className="flex flex-col">
       <h2 className="text-2xl">Users admin panel</h2>
@@ -179,7 +196,7 @@ function HandleUsers() {
             <button
               type="button"
               className="w-[140px] bg-primary-300 rounded-md p-1.5"
-              onClick={handleCreateUser}
+              onClick={intervaledCreateUser}
             >
               Create
             </button>
@@ -204,7 +221,7 @@ function HandleUsers() {
             <button
               type="button"
               className="w-[140px] bg-primary-300 rounded-md p-1.5"
-              onClick={handleDeleteUser}
+              onClick={intervaledDeleteUser}
             >
               Delete
             </button>
@@ -217,7 +234,7 @@ function HandleUsers() {
       <button
         type="button"
         className="bg-primary-300 mb-2.5 w-fit mx-auto p-1.5 rounded-md"
-        onClick={handleFetchAllUsers}
+        onClick={intervaledFetchAllUsers}
       >
         Fetch all users
       </button>

@@ -2,8 +2,10 @@ import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PasswordInput from '../components/PasswordInput';
 import useAuth from '../hooks/useAuth';
-import useOnKeyPress from '../hooks/useOnKeyPress';
 import { IUserScope, IUser } from '../utils/types';
+import useExecutionInterval from '../hooks/useExecutionInterval';
+import useOnKeyPress from '../hooks/useOnKeyPress';
+import { msIntervalBetweenCalls } from '../utils/constants';
 
 function LogIn() {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,10 +52,12 @@ function LogIn() {
     }
   };
 
-  useOnKeyPress({
-    keyName: 'Enter',
+  const { intervaledCallback: intervaledSubmit } = useExecutionInterval({
+    ms: msIntervalBetweenCalls,
     callback: handleSubmit,
   });
+
+  useOnKeyPress({ keyName: 'Enter', callback: intervaledSubmit });
 
   return (
     <div className="mt-navbar mb-[40%] p-3">
@@ -77,7 +81,7 @@ function LogIn() {
 
         <div className="flex items-center gap-x-2">
           <button
-            onClick={handleSubmit}
+            onClick={intervaledSubmit}
             className="w-fit p-1.5 bg-primary-300 rounded-md"
             type="button"
           >

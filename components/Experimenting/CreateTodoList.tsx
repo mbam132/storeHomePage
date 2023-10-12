@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import GQLClient from '../../services/GQLClient';
-import SelectList from './SelectList';
 import useUser from '../../hooks/useUser';
-import useGQLQuery from '../../hooks/useGQLQuery';
 import useOnKeyPress from '../../hooks/useOnKeyPress';
+import useExecutionInterval from '../../hooks/useExecutionInterval';
+import { msIntervalBetweenCalls } from '../../utils/constants';
 
 function CreateTodoList() {
   const router = useRouter();
@@ -45,10 +45,12 @@ function CreateTodoList() {
     // }
   };
 
-  useOnKeyPress({
-    keyName: 'Enter',
+  const { intervaledCallback: intervaledCreateTodo } = useExecutionInterval({
+    ms: msIntervalBetweenCalls,
     callback: handleCreateTodo,
   });
+
+  useOnKeyPress({ keyName: 'Enter', callback: intervaledCreateTodo });
 
   return (
     <div className="flex flex-col gap-y-2.5">
@@ -68,7 +70,7 @@ function CreateTodoList() {
           disabled={todoListName === ''}
           type="button"
           className="bg-primary-300 p-1.5 rounded-md w-fit"
-          onClick={handleCreateTodo}
+          onClick={intervaledCreateTodo}
         >
           Submit
         </button>

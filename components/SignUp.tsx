@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import PasswordInput from './PasswordInput';
-import GQLClient from '../services/GQLClient';
 import useAuth from '../hooks/useAuth';
+import useExecutionInterval from '../hooks/useExecutionInterval';
 import useOnKeyPress from '../hooks/useOnKeyPress';
+import { msIntervalBetweenCalls } from '../utils/constants';
 
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -60,10 +61,12 @@ function SignUp() {
     }
   };
 
-  useOnKeyPress({
-    keyName: 'Enter',
+  const { intervaledCallback: intervaledHandleSubmit } = useExecutionInterval({
+    ms: msIntervalBetweenCalls,
     callback: handleSubmit,
   });
+
+  useOnKeyPress({ keyName: 'Enter', callback: intervaledHandleSubmit });
 
   if (userCreated) {
     return (
@@ -105,7 +108,7 @@ function SignUp() {
 
       <div className="flex items-center gap-x-2">
         <button
-          onClick={handleSubmit}
+          onClick={intervaledHandleSubmit}
           disabled={errorMessage !== ''}
           className="w-fit p-1.5 bg-primary-300 rounded-md"
           type="button"
