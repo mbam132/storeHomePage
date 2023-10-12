@@ -24,8 +24,13 @@ function HandleUsers() {
 
   const [displayUserCreatedMessage, setDisplayUserCreatedMessage] =
     useState(false);
+
+  const [isCreatingUser, setIsCreatingUser] = useState(false);
+
   const [displayUserDeletedMessage, setDisplayUserDeletedMessage] =
     useState(false);
+
+  const [isDeletingUser, setIsDeletingUser] = useState(false);
 
   const [usersActionsLog, setUsersActionsLog] = useState([]);
 
@@ -93,6 +98,7 @@ function HandleUsers() {
   });
 
   const handleCreateUser = async () => {
+    setIsCreatingUser(true);
     try {
       await signUp(
         userToCreate.email,
@@ -108,6 +114,8 @@ function HandleUsers() {
       }, secondsToDisplayData * 1000);
     } catch (error) {
       console.error(error.message);
+    } finally {
+      setIsCreatingUser(false);
     }
   };
 
@@ -117,6 +125,7 @@ function HandleUsers() {
   });
 
   const handleDeleteUser = async () => {
+    setIsDeletingUser(true);
     const mutationName = 'deleteUser';
     const mutationQuery = `
     mutation{
@@ -152,6 +161,8 @@ function HandleUsers() {
     } catch (error) {
       console.log('An error ocurred deleting a user');
       console.log(error.message);
+    } finally {
+      setIsDeletingUser(false);
     }
   };
 
@@ -192,7 +203,7 @@ function HandleUsers() {
             value={userToCreate.password}
             onChange={handleSetUserToCreate}
           />
-          <div className="flex">
+          <div className="flex items-center gap-x-2">
             <button
               type="button"
               className="w-[140px] bg-primary-300 rounded-md p-1.5"
@@ -200,6 +211,7 @@ function HandleUsers() {
             >
               Create
             </button>
+            {isCreatingUser && <div className="loading-spinner" />}
           </div>
 
           {displayUserCreatedMessage && <span>The user was created</span>}
@@ -217,7 +229,7 @@ function HandleUsers() {
               setUserToDeleteEmail(e.target.value);
             }}
           />
-          <div className="flex">
+          <div className="flex items-center gap-x-2">
             <button
               type="button"
               className="w-[140px] bg-primary-300 rounded-md p-1.5"
@@ -225,6 +237,7 @@ function HandleUsers() {
             >
               Delete
             </button>
+            {isDeletingUser && <div className="loading-spinner" />}
           </div>
 
           {displayUserDeletedMessage && <span>The user was deleted</span>}
