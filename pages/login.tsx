@@ -67,6 +67,7 @@ function LogIn() {
         <div>
           <input
             name="email"
+            type="text"
             value={inputValues.email}
             onChange={handleInputValueChange}
             placeholder="Email"

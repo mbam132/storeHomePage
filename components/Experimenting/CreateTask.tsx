@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import GQLClient from '../../services/GQLClient';
-import useUser from '../../hooks/useUser';
 import useOnKeyPress from '../../hooks/useOnKeyPress';
 import useExecutionInterval from '../../hooks/useExecutionInterval';
 import { msIntervalBetweenCalls } from '../../utils/constants';
 
-function CreateTodoList() {
-  const router = useRouter();
-  const { user } = useUser();
-
-  const [todoListName, setTodoListName] = useState('');
+function CreateTask() {
+  const [taskName, setTaskName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCreateTodo = async () => {
+  const handleCreateTask = async () => {
+    const mutationName = 'createTask';
     const mutation = `
-      mutation {
-        createTodo(data: {name: "${todoListName}", userEmail: "${user.email}" })
+       mutation{
+        ${mutationName}(name: "${taskName}")
       {
         ...on Error {
           message
         }
-        ...on MutationCreateTodoSuccess {
+        ...on MutationCreateTaskSuccess {
           data{
             id
-            name
-            userEmail
           }
         }
       }
@@ -38,7 +32,7 @@ function CreateTodoList() {
 
     // const anErrorOcurred: boolean = !!requestResult.createTodo.message;
 
-    setTodoListName('');
+    setTaskName('');
     setIsLoading(false);
     // if (anErrorOcurred) {
     //   return;
@@ -47,7 +41,7 @@ function CreateTodoList() {
 
   const { intervaledCallback: intervaledCreateTodo } = useExecutionInterval({
     ms: msIntervalBetweenCalls,
-    callback: handleCreateTodo,
+    callback: handleCreateTask,
   });
 
   useOnKeyPress({ keyName: 'Enter', callback: intervaledCreateTodo });
@@ -60,14 +54,14 @@ function CreateTodoList() {
         <input
           type="text"
           placeholder="Name"
-          value={todoListName}
-          onChange={(e) => setTodoListName(e.target.value)}
-          className="w-[150px]  focus:border-primary-300 focus:outline-none rounded-md mb-0.5"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+          className="w-[150px] focus:outline-none rounded-md mb-0.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
         />
       </div>
       <div className="flex items-center gap-x-2">
         <button
-          disabled={todoListName === ''}
+          disabled={taskName === ''}
           type="button"
           className="bg-primary-300 p-1.5 rounded-md w-fit"
           onClick={intervaledCreateTodo}
@@ -80,4 +74,4 @@ function CreateTodoList() {
   );
 }
 
-export default CreateTodoList;
+export default CreateTask;

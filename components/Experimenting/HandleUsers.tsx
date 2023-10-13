@@ -179,7 +179,7 @@ function HandleUsers() {
         <div className="flex flex-col gap-y-2.5">
           <h3>Create user</h3>
           <input
-            className="w-[140px] rounded-md"
+            className="w-[140px] rounded-md border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
             type="text"
             name="name"
             placeholder="Name"
@@ -188,7 +188,7 @@ function HandleUsers() {
           />
 
           <input
-            className="w-[140px] rounded-md"
+            className="w-[140px] rounded-md border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
             type="text"
             name="email"
             placeholder="Email"
@@ -196,7 +196,7 @@ function HandleUsers() {
             onChange={handleSetUserToCreate}
           />
           <input
-            className="w-[140px] rounded-md"
+            className="w-[140px] rounded-md border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
             type="text"
             name="password"
             placeholder="Password"
@@ -220,7 +220,7 @@ function HandleUsers() {
         <div className="flex flex-col ml-[160px] gap-y-2.5">
           <h3>Delete a user</h3>
           <input
-            className="w-[140px] rounded-md"
+            className="w-[140px] rounded-md border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
             type="text"
             name="email"
             placeholder="Email"
