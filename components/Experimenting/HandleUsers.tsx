@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Head from 'next/head';
 import GQLClient from '../../services/GQLClient';
 import useSubscription from '../../hooks/useSubscription';
 import useAuth from '../../hooks/useAuth';
@@ -173,6 +174,9 @@ function HandleUsers() {
 
   return (
     <div className="flex flex-col">
+      <Head>
+        <title>Users Admin</title>
+      </Head>
       <h2 className="text-2xl">Users admin panel</h2>
 
       <div className="flex">

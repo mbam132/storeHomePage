@@ -1,4 +1,5 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import PasswordInput from '../components/PasswordInput';
 import useAuth from '../hooks/useAuth';
@@ -61,6 +62,9 @@ function LogIn() {
 
   return (
     <div className="mt-navbar mb-[40%] p-3">
+      <Head>
+        <title>Login</title>
+      </Head>
       <div className="flex flex-col gap-y-2.5">
         <h1 className="text-2xl">Log in</h1>
 
