@@ -109,6 +109,12 @@ input[type='text']:focus {
   animation: spinnerAnimation 0.5s linear infinite;
 }
 
+.loading-spinner.sm-spinner {
+  border-width: 1px;
+  width: 10px;
+  height: 10px;
+}
+
 @keyframes spinnerAnimation {
   0% {
     transform: rotate(0deg);

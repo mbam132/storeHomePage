@@ -2,15 +2,18 @@ import React from 'react';
 import ProtectedRoute from '../components/ProtectedRoute';
 import CreateTask from '../components/Experimenting/CreateTask';
 import { IUserScope } from '../utils/types';
+import TasksList from '../components/Experimenting/TasksList';
 
-function CreateTodo() {
+function TasksMenu() {
   return (
     <div className="mt-navbar mb-[40%] flex flex-col gap-y-3 p-3">
+      <h1 className="text-2xl">Tasks menu</h1>
       <CreateTask />
+      <TasksList />
     </div>
   );
 }
 
 export default () => (
-  <ProtectedRoute component={CreateTodo} authScope={IUserScope.PLAINUSER} />
+  <ProtectedRoute component={TasksMenu} authScope={IUserScope.PLAINUSER} />
 );

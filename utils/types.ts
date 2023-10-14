@@ -5,6 +5,13 @@ export interface IUser {
   id?: string;
 }
 
+export interface ITask {
+  id?: number;
+  completed?: boolean;
+  createdAt?: string;
+  name?: string;
+}
+
 export interface IProduct {
   title: string;
   rating: number;

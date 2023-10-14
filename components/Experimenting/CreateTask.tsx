@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import GQLClient from '../../services/GQLClient';
 import useOnKeyPress from '../../hooks/useOnKeyPress';
 import useExecutionInterval from '../../hooks/useExecutionInterval';
 import { msIntervalBetweenCalls } from '../../utils/constants';
+import { addTask } from '../../store';
 
 function CreateTask() {
+  const dispatch = useDispatch();
   const [taskName, setTaskName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,6 +23,9 @@ function CreateTask() {
         ...on MutationCreateTaskSuccess {
           data{
             id
+            name
+            completed
+            createdAt
           }
         }
       }
@@ -30,13 +36,16 @@ function CreateTask() {
 
     const requestResult: any = await GQLClient.request(mutation);
 
-    // const anErrorOcurred: boolean = !!requestResult.createTodo.message;
-
     setTaskName('');
     setIsLoading(false);
-    // if (anErrorOcurred) {
-    //   return;
-    // }
+
+    const anErrorOcurred: boolean = !!requestResult[mutationName].message;
+
+    if (anErrorOcurred) {
+      return;
+    }
+
+    dispatch(addTask(requestResult[mutationName].data));
   };
 
   const { intervaledCallback: intervaledCreateTodo } = useExecutionInterval({
@@ -47,8 +56,8 @@ function CreateTask() {
   useOnKeyPress({ keyName: 'Enter', callback: intervaledCreateTodo });
 
   return (
-    <div className="flex flex-col gap-y-2.5">
-      <h1 className="text-2xl">Create a task</h1>
+    <div className="flex flex-col gap-y-2.5 w-fit border-primary-300 border-2 rounded-md p-3">
+      <h1 className="text-xl">New task</h1>
 
       <div>
         <input
@@ -66,7 +75,7 @@ function CreateTask() {
           className="bg-primary-300 p-1.5 rounded-md w-fit"
           onClick={intervaledCreateTodo}
         >
-          Submit
+          Create
         </button>
         {isLoading && <div className="loading-spinner" />}
       </div>

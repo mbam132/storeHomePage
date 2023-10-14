@@ -3,7 +3,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import NProgress from 'nprogress';
 import Router from 'next/router';
 import Head from 'next/head';
+import { Provider } from 'react-redux';
 import { AppProps } from 'next/app';
+import store from '../store';
 import { UserProvider } from '../hooks/useUser';
 import NavBar from '../components/NavBar';
 import '../styles.css';
@@ -25,15 +27,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
   }, []);
   return (
-    <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <Head>
-          <title>Prueba Front End</title>
-        </Head>
-        <NavBar />
-        <Component {...pageProps} />
-      </UserProvider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <Head>
+            <title>Prueba Front End</title>
+          </Head>
+          <NavBar />
+          <Component {...pageProps} />
+        </UserProvider>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
