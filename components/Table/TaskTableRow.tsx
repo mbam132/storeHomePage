@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import GQLClient from '../../services/GQLClient';
-import useExecutionInterval from '../../hooks/useExecutionInterval';
+import useThrottle from '../../hooks/useThrottle';
 import { updateTask, deleteTask } from '../../store';
 import { msIntervalBetweenCalls } from '../../utils/constants';
 import { ITask } from '../../utils/types';
@@ -80,12 +80,12 @@ function TaskListItem({ item }: IProps) {
     dispatch(deleteTask(item.id));
   };
 
-  const { intervaledCallback: intervaledSetCompleted } = useExecutionInterval({
+  const { throttledCallback: throttledSetCompleted } = useThrottle({
     callback: handleSetCompleted,
     ms: msIntervalBetweenCalls,
   });
 
-  const { intervaledCallback: intervaledDeleteTask } = useExecutionInterval({
+  const { throttledCallback: throttledDeleteTask } = useThrottle({
     callback: handleDeleteTask,
     ms: msIntervalBetweenCalls,
   });
@@ -98,7 +98,7 @@ function TaskListItem({ item }: IProps) {
         <input
           type="checkbox"
           checked={item.completed}
-          onChange={intervaledSetCompleted}
+          onChange={throttledSetCompleted}
           className="w-4 h-4 text-primary-300 bg-white border-gray-400 rounded focus:ring-0 "
         />
         {completedIsLoading ? (
@@ -109,7 +109,7 @@ function TaskListItem({ item }: IProps) {
       </td>
       <td>
         <div className="flex items-center gap-x-1">
-          <button type="button" onClick={intervaledDeleteTask}>
+          <button type="button" onClick={throttledDeleteTask}>
             <RiDeleteBinLine className="text-primary-300 w-[18px] h-[18px] cursor-pointer	" />
           </button>
           {isDeleting ? (

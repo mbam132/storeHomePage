@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import useGQLQuery from '../../hooks/useGQLQuery';
-import TaskListItem from './TaskListItem';
-import { setTasks, addTask, selectTasks } from '../../store';
+import TaskTableRow from '../Table/TaskTableRow';
+import { setTasks, selectTasks } from '../../store';
+import Table from '../Table';
 
 const columnNames = ['Name', 'Date Created', 'Completed', ''];
 
@@ -45,23 +46,11 @@ function TasksList() {
   return (
     <div>
       <h2 className="text-xl">Tasks</h2>
-
-      <div className="relative overflow-x-auto rounded-md border-2 border-primary-300">
-        <table className="w-full text-sm text-left">
-          <thead className="text-xs uppercase bg-primary-300">
-            <tr>
-              {columnNames.map((name) => (
-                <th className="px-3 py-1.5">{name}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y-2 divide-primary-300">
-            {userTasks.map((task) => (
-              <TaskListItem item={task} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table
+        columnNames={columnNames}
+        rows={userTasks}
+        RowComponent={TaskTableRow}
+      />
     </div>
   );
 }

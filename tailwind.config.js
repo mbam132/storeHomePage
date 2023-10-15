@@ -44,11 +44,8 @@ module.exports = {
         'black-1': '#333',
         'white-1': '#fefefe',
       },
-      height: {
-        navbar: '26px',
-      },
-      margin: {
-        navbar: '26px',
+      spacing: {
+        navbar: '26px'
       },
     },
   },
