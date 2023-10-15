@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import GQLClient from '../../services/GQLClient';
 import useOnKeyPress from '../../hooks/useOnKeyPress';
-import useExecutionInterval from '../../hooks/useExecutionInterval';
+import useThrottle from '../../hooks/useThrottle';
 import { msIntervalBetweenCalls } from '../../utils/constants';
 import { addTask } from '../../store';
 
@@ -48,12 +48,12 @@ function CreateTask() {
     dispatch(addTask(requestResult[mutationName].data));
   };
 
-  const { intervaledCallback: intervaledCreateTodo } = useExecutionInterval({
+  const { throttledCallback: throttledCreateTodo } = useThrottle({
     ms: msIntervalBetweenCalls,
     callback: handleCreateTask,
   });
 
-  useOnKeyPress({ keyName: 'Enter', callback: intervaledCreateTodo });
+  useOnKeyPress({ keyName: 'Enter', callback: throttledCreateTodo });
 
   return (
     <div className="flex flex-col gap-y-2.5 w-fit border-primary-300 border-2 rounded-md p-3">
@@ -73,7 +73,7 @@ function CreateTask() {
           disabled={taskName === ''}
           type="button"
           className="bg-primary-300 p-1.5 rounded-md w-fit"
-          onClick={intervaledCreateTodo}
+          onClick={throttledCreateTodo}
         >
           Create
         </button>

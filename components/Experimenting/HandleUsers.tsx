@@ -3,7 +3,7 @@ import Head from 'next/head';
 import GQLClient from '../../services/GQLClient';
 import useSubscription from '../../hooks/useSubscription';
 import useAuth from '../../hooks/useAuth';
-import useExecutionInterval from '../../hooks/useExecutionInterval';
+import useThrottle from '../../hooks/useThrottle';
 import { msIntervalBetweenCalls } from '../../utils/constants';
 
 function HandleUsers() {
@@ -93,7 +93,7 @@ function HandleUsers() {
     }
   };
 
-  const { intervaledCallback: intervaledFetchAllUsers } = useExecutionInterval({
+  const { throttledCallback: throttledFetchAllUsers } = useThrottle({
     ms: msIntervalBetweenCalls,
     callback: handleFetchAllUsers,
   });
@@ -120,7 +120,7 @@ function HandleUsers() {
     }
   };
 
-  const { intervaledCallback: intervaledCreateUser } = useExecutionInterval({
+  const { throttledCallback: throttledCreateUser } = useThrottle({
     ms: msIntervalBetweenCalls,
     callback: handleCreateUser,
   });
@@ -167,7 +167,7 @@ function HandleUsers() {
     }
   };
 
-  const { intervaledCallback: intervaledDeleteUser } = useExecutionInterval({
+  const { throttledCallback: throttledDeleteUser } = useThrottle({
     ms: msIntervalBetweenCalls,
     callback: handleDeleteUser,
   });
@@ -211,7 +211,7 @@ function HandleUsers() {
             <button
               type="button"
               className="w-[140px] bg-primary-300 rounded-md p-1.5"
-              onClick={intervaledCreateUser}
+              onClick={throttledCreateUser}
             >
               Create
             </button>
@@ -237,7 +237,7 @@ function HandleUsers() {
             <button
               type="button"
               className="w-[140px] bg-primary-300 rounded-md p-1.5"
-              onClick={intervaledDeleteUser}
+              onClick={throttledDeleteUser}
             >
               Delete
             </button>
@@ -251,7 +251,7 @@ function HandleUsers() {
       <button
         type="button"
         className="bg-primary-300 mb-2.5 w-fit mx-auto p-1.5 rounded-md"
-        onClick={intervaledFetchAllUsers}
+        onClick={throttledFetchAllUsers}
       >
         Fetch all users
       </button>

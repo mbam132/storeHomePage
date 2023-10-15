@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PasswordInput from './PasswordInput';
 import useAuth from '../hooks/useAuth';
-import useExecutionInterval from '../hooks/useExecutionInterval';
+import useThrottle from '../hooks/useThrottle';
 import useOnKeyPress from '../hooks/useOnKeyPress';
 import { msIntervalBetweenCalls } from '../utils/constants';
 
@@ -61,12 +61,12 @@ function SignUp() {
     }
   };
 
-  const { intervaledCallback: intervaledHandleSubmit } = useExecutionInterval({
+  const { throttledCallback: throttledHandleSubmit } = useThrottle({
     ms: msIntervalBetweenCalls,
     callback: handleSubmit,
   });
 
-  useOnKeyPress({ keyName: 'Enter', callback: intervaledHandleSubmit });
+  useOnKeyPress({ keyName: 'Enter', callback: throttledHandleSubmit });
 
   if (userCreated) {
     return (
@@ -108,7 +108,7 @@ function SignUp() {
 
       <div className="flex items-center gap-x-2">
         <button
-          onClick={intervaledHandleSubmit}
+          onClick={throttledHandleSubmit}
           disabled={errorMessage !== ''}
           className="w-fit p-1.5 bg-primary-300 rounded-md"
           type="button"

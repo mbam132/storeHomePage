@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import PasswordInput from '../components/PasswordInput';
 import useAuth from '../hooks/useAuth';
 import { IUserScope, IUser } from '../utils/types';
-import useExecutionInterval from '../hooks/useExecutionInterval';
+import useThrottle from '../hooks/useThrottle';
 import useOnKeyPress from '../hooks/useOnKeyPress';
 import { msIntervalBetweenCalls } from '../utils/constants';
 
@@ -53,12 +53,12 @@ function LogIn() {
     }
   };
 
-  const { intervaledCallback: intervaledSubmit } = useExecutionInterval({
+  const { throttledCallback: throttledSubmit } = useThrottle({
     ms: msIntervalBetweenCalls,
     callback: handleSubmit,
   });
 
-  useOnKeyPress({ keyName: 'Enter', callback: intervaledSubmit });
+  useOnKeyPress({ keyName: 'Enter', callback: throttledSubmit });
 
   return (
     <div className="mt-navbar mb-[40%] p-3">
@@ -86,7 +86,7 @@ function LogIn() {
 
         <div className="flex items-center gap-x-2">
           <button
-            onClick={intervaledSubmit}
+            onClick={throttledSubmit}
             className="w-fit p-1.5 bg-primary-300 rounded-md"
             type="button"
           >

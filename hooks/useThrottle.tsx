@@ -5,10 +5,10 @@ interface IProps {
   ms: number;
 }
 
-function useExecutionInterval({ callback, ms }: IProps) {
+function useThrottle({ callback, ms }: IProps) {
   const [lastTime, setLastTime] = useState(null);
 
-  const intervaledCallback = ({ ...params } = {}) => {
+  const throttledCallback = ({ ...params } = {}) => {
     const now = Date.now();
 
     if (now > lastTime + ms) {
@@ -17,7 +17,7 @@ function useExecutionInterval({ callback, ms }: IProps) {
     }
   };
 
-  return { intervaledCallback };
+  return { throttledCallback };
 }
 
-export default useExecutionInterval;
+export default useThrottle;
