@@ -115,6 +115,11 @@ input[type='text']:focus {
   height: 10px;
 }
 
+.loading-spinner.white-spinner {
+  border-color: white;
+  border-left-color: transparent;
+}
+
 @keyframes spinnerAnimation {
   0% {
     transform: rotate(0deg);

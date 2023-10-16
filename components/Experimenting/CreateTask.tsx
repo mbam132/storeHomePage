@@ -5,6 +5,8 @@ import useOnKeyPress from '../../hooks/useOnKeyPress';
 import useThrottle from '../../hooks/useThrottle';
 import { msIntervalBetweenCalls } from '../../utils/constants';
 import { addTask } from '../../store';
+import Card from '../Card';
+import Button from '../Button';
 
 function CreateTask() {
   const dispatch = useDispatch();
@@ -56,29 +58,28 @@ function CreateTask() {
   useOnKeyPress({ keyName: 'Enter', callback: throttledCreateTodo });
 
   return (
-    <div className="flex flex-col gap-y-2.5 w-fit border-primary-300 border-2 rounded-md p-3">
-      <h1 className="text-xl">New task</h1>
-
-      <div>
-        <input
-          type="text"
-          placeholder="Name"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-          className="w-[150px] focus:outline-none rounded-md mb-0.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
-        />
-      </div>
-      <div className="flex items-center gap-x-2">
-        <button
-          disabled={taskName === ''}
-          type="button"
-          className="bg-primary-300 p-1.5 rounded-md w-fit"
-          onClick={throttledCreateTodo}
-        >
-          Create
-        </button>
-        {isLoading && <div className="loading-spinner" />}
-      </div>
+    <div>
+      <Card title="New Task">
+        <div>
+          <input
+            type="text"
+            placeholder="Name"
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
+            className="w-[150px] focus:outline-none rounded-md mb-0.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
+          />
+        </div>
+        <div className="flex items-center gap-x-2">
+          <Button
+            disabled={taskName === ''}
+            handleOnClick={throttledCreateTodo}
+            showSpinner={isLoading}
+            width="150px"
+          >
+            Create
+          </Button>
+        </div>
+      </Card>
     </div>
   );
 }

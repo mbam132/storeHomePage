@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth';
 import useThrottle from '../hooks/useThrottle';
 import useOnKeyPress from '../hooks/useOnKeyPress';
 import { msIntervalBetweenCalls } from '../utils/constants';
+import Button from './Button';
 
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,46 +79,44 @@ function SignUp() {
     );
   }
   return (
-    <div className="flex flex-col gap-y-2.5">
-      <h1 className="text-2xl">Sign up</h1>
+    <div>
+      <div className="flex flex-col gap-y-1.5 w-fit border-primary-300 border-2 rounded-md py-3 px-2 items-start h-fit">
+        <h1 className="text-xl">Sign up</h1>
 
-      <div>
-        <input
-          name="name"
-          value={inputValues.name}
-          onChange={handleInputValueChange}
-          placeholder="Name"
-          className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
+        <div>
+          <input
+            name="name"
+            value={inputValues.name}
+            onChange={handleInputValueChange}
+            placeholder="Name"
+            className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
+          />
+        </div>
+
+        <div>
+          <input
+            name="email"
+            value={inputValues.email}
+            onChange={handleInputValueChange}
+            placeholder="Email"
+            className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
+          />
+        </div>
+
+        <PasswordInput
+          setValue={handleInputValueChange}
+          value={inputValues.password}
         />
-      </div>
 
-      <div>
-        <input
-          name="email"
-          value={inputValues.email}
-          onChange={handleInputValueChange}
-          placeholder="Email"
-          className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
-        />
-      </div>
-
-      <PasswordInput
-        setValue={handleInputValueChange}
-        value={inputValues.password}
-      />
-
-      <div className="flex items-center gap-x-2">
-        <button
-          onClick={throttledHandleSubmit}
+        <Button
+          handleOnClick={throttledHandleSubmit}
           disabled={errorMessage !== ''}
-          className="w-fit p-1.5 bg-primary-300 rounded-md"
-          type="button"
+          showSpinner={isLoading}
+          width="150px"
         >
           Submit
-        </button>
-        {isLoading && <div className="loading-spinner" />}
+        </Button>
       </div>
-
       {errorMessage !== '' && (
         <p className="mt-1 text-sm text-primary-300">{errorMessage}</p>
       )}

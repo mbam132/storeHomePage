@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <UserProvider>
           <Head>
-            <title>Prueba Front End</title>
+            <title>App</title>
           </Head>
           <NavBar />
           <Component {...pageProps} />

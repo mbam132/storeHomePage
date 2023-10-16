@@ -7,6 +7,7 @@ import { IUserScope, IUser } from '../utils/types';
 import useThrottle from '../hooks/useThrottle';
 import useOnKeyPress from '../hooks/useOnKeyPress';
 import { msIntervalBetweenCalls } from '../utils/constants';
+import Button from '../components/Button';
 
 function LogIn() {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,8 +66,8 @@ function LogIn() {
       <Head>
         <title>Login</title>
       </Head>
-      <div className="flex flex-col gap-y-2.5">
-        <h1 className="text-2xl">Log in</h1>
+      <div className="flex flex-col gap-y-1.5 w-fit border-primary-300 border-2 rounded-md py-3 px-2 items-start h-fit">
+        <h1 className="text-xl">Log in</h1>
 
         <div>
           <input
@@ -84,21 +85,19 @@ function LogIn() {
           value={inputValues.password}
         />
 
-        <div className="flex items-center gap-x-2">
-          <button
-            onClick={throttledSubmit}
-            className="w-fit p-1.5 bg-primary-300 rounded-md"
-            type="button"
-          >
-            Submit
-          </button>
-          {isLoading && <div className="loading-spinner" />}
-        </div>
-
-        {errorMessage !== '' && (
-          <p className="mt-1 text-sm text-primary-300">{errorMessage}</p>
-        )}
+        <Button
+          handleOnClick={throttledSubmit}
+          width="150px"
+          showSpinner={isLoading}
+        >
+          Submit
+        </Button>
       </div>
+      {errorMessage && (
+        <p className="mt-2 text-sm text-primary-300 leading-5">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 }

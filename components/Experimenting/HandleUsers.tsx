@@ -5,6 +5,8 @@ import useSubscription from '../../hooks/useSubscription';
 import useAuth from '../../hooks/useAuth';
 import useThrottle from '../../hooks/useThrottle';
 import { msIntervalBetweenCalls } from '../../utils/constants';
+import Card from '../Card';
+import Button from '../Button';
 
 function HandleUsers() {
   const { signUp } = useAuth();
@@ -179,9 +181,8 @@ function HandleUsers() {
       </Head>
       <h2 className="text-2xl">Users admin panel</h2>
 
-      <div className="flex">
-        <div className="flex flex-col gap-y-2.5">
-          <h3>Create user</h3>
+      <div className="flex pt-2 gap-x-12">
+        <Card title="New User">
           <input
             className="w-[140px] rounded-md border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
             type="text"
@@ -208,21 +209,17 @@ function HandleUsers() {
             onChange={handleSetUserToCreate}
           />
           <div className="flex items-center gap-x-2">
-            <button
-              type="button"
-              className="w-[140px] bg-primary-300 rounded-md p-1.5"
-              onClick={throttledCreateUser}
+            <Button
+              width="140px"
+              showSpinner={isCreatingUser}
+              handleOnClick={throttledCreateUser}
             >
               Create
-            </button>
-            {isCreatingUser && <div className="loading-spinner" />}
+            </Button>
           </div>
+        </Card>
 
-          {displayUserCreatedMessage && <span>The user was created</span>}
-        </div>
-
-        <div className="flex flex-col ml-[160px] gap-y-2.5">
-          <h3>Delete a user</h3>
+        <Card title="Delete a user">
           <input
             className="w-[140px] rounded-md border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
             type="text"
@@ -233,19 +230,14 @@ function HandleUsers() {
               setUserToDeleteEmail(e.target.value);
             }}
           />
-          <div className="flex items-center gap-x-2">
-            <button
-              type="button"
-              className="w-[140px] bg-primary-300 rounded-md p-1.5"
-              onClick={throttledDeleteUser}
-            >
-              Delete
-            </button>
-            {isDeletingUser && <div className="loading-spinner" />}
-          </div>
-
-          {displayUserDeletedMessage && <span>The user was deleted</span>}
-        </div>
+          <Button
+            width="140px"
+            showSpinner={isDeletingUser}
+            handleOnClick={throttledDeleteUser}
+          >
+            Delete
+          </Button>
+        </Card>
       </div>
 
       <button
