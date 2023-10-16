@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import PasswordInput from './PasswordInput';
 import useAuth from '../hooks/useAuth';
 import useThrottle from '../hooks/useThrottle';
 import useOnKeyPress from '../hooks/useOnKeyPress';
 import { msIntervalBetweenCalls } from '../utils/constants';
 import Button from './Button';
+
+const inputWidth: string = '150px';
 
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -75,6 +78,11 @@ function SignUp() {
         <h1 className="text-primary-300 text-xl">
           The user was successfuly created
         </h1>
+        <div className="mt-0.5">
+          <Link href="/login" className="underline text-[#0E467A]	">
+            Login page
+          </Link>
+        </div>
       </div>
     );
   }
@@ -89,7 +97,7 @@ function SignUp() {
             value={inputValues.name}
             onChange={handleInputValueChange}
             placeholder="Name"
-            className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
+            className={`w-[${inputWidth}] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md`}
           />
         </div>
 
@@ -99,20 +107,21 @@ function SignUp() {
             value={inputValues.email}
             onChange={handleInputValueChange}
             placeholder="Email"
-            className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md "
+            className={`w-[${inputWidth}] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md`}
           />
         </div>
 
         <PasswordInput
           setValue={handleInputValueChange}
           value={inputValues.password}
+          inputWidth={inputWidth}
         />
 
         <Button
           handleOnClick={throttledHandleSubmit}
           disabled={errorMessage !== ''}
           showSpinner={isLoading}
-          width="150px"
+          width={inputWidth}
         >
           Submit
         </Button>

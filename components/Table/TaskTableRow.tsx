@@ -93,13 +93,15 @@ function TaskListItem({ item }: IProps) {
   return (
     <tr>
       <td className="px-3 py-1.5 text-left">{item.name}</td>
-      <td className="px-3 py-1.5 text-left">{item.createdAt}</td>
-      <td className="px-3 py-1.5 text-left flex items-center gap-x-1">
+      <td className="px-3 py-1.5 text-left">
+        {new Date(item.createdAt).toLocaleString('es-ar')}
+      </td>
+      <td className="px-3 py-1.5 text-left flex items-center gap-x-1 h-[33px]">
         <input
           type="checkbox"
           checked={item.completed}
           onChange={throttledSetCompleted}
-          className="w-4 h-4 text-primary-300 bg-white border-gray-400 rounded focus:ring-0 "
+          className="w-4 h-4 text-primary-300 bg-white border-gray-400 rounded focus:ring-0"
         />
         {completedIsLoading ? (
           <div className="loading-spinner sm-spinner" />

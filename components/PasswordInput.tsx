@@ -5,9 +5,10 @@ interface IProps {
   label?: string;
   value: string;
   setValue: (event: SyntheticEvent) => void;
+  inputWidth: string;
 }
 
-function PasswordInput({ label, value, setValue }: IProps) {
+function PasswordInput({ label, value, setValue, inputWidth }: IProps) {
   const [show, setShow] = useState(false);
 
   const toggleShowingPassword = () => {
@@ -25,7 +26,7 @@ function PasswordInput({ label, value, setValue }: IProps) {
           value={value}
           onChange={setValue}
           autoComplete="off"
-          className="w-[150px] rounded-md p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none"
+          className={`w-[${inputWidth}] rounded-md p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none`}
         />
         <button
           className="flex items-center pl-1.5"

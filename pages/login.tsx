@@ -9,6 +9,8 @@ import useOnKeyPress from '../hooks/useOnKeyPress';
 import { msIntervalBetweenCalls } from '../utils/constants';
 import Button from '../components/Button';
 
+const inputWidth: string = '150px';
+
 function LogIn() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
@@ -76,18 +78,19 @@ function LogIn() {
             value={inputValues.email}
             onChange={handleInputValueChange}
             placeholder="Email"
-            className="w-[150px] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md"
+            className={`w-[${inputWidth}] p-1.5 border-gray-300 border-2 focus:border-primary-300 focus:outline-none rounded-md`}
           />
         </div>
 
         <PasswordInput
           setValue={handleInputValueChange}
           value={inputValues.password}
+          inputWidth={inputWidth}
         />
 
         <Button
           handleOnClick={throttledSubmit}
-          width="150px"
+          width={inputWidth}
           showSpinner={isLoading}
         >
           Submit
