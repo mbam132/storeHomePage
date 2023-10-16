@@ -14,7 +14,7 @@ function ProtectedRoute({ component, authScope }: IProps) {
 
   if (isLoading) {
     return (
-      <div>
+      <div className="mt-navbar mb-[40%] p-3">
         <h1>Loading...</h1>
       </div>
     );

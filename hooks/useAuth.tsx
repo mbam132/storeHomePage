@@ -1,10 +1,13 @@
 import React from 'react';
 import GQLClient from '../services/GQLClient';
+import { useDispatch } from 'react-redux';
 import { JWT_LOCAL_STORAGE_KEY } from '../utils/constants';
 import useUser from './useUser';
 import { IUser } from '../utils/types';
+import { deleteAllTasks } from '../store';
 
 function useAuth() {
+  const dispatch = useDispatch();
   const { setUser } = useUser();
 
   const signUp = async (
@@ -84,6 +87,7 @@ function useAuth() {
 
   const logOut = () => {
     setUser(null);
+    dispatch(deleteAllTasks());
     window.localStorage.removeItem(JWT_LOCAL_STORAGE_KEY);
     GQLClient.setHeader('authorization', '');
   };

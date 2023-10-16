@@ -45,6 +45,12 @@ const tasksSlice = createSlice({
         value: [...state.value.filter((task) => task.id !== action.payload)],
       };
     },
+    deleteAllTasks: (state) => {
+      return {
+        ...state,
+        value: [],
+      };
+    },
   },
 });
 
@@ -52,7 +58,8 @@ const store = configureStore({
   reducer: tasksSlice.reducer,
 });
 
-export const { setTasks, addTask, updateTask, deleteTask } = tasksSlice.actions;
+export const { setTasks, addTask, updateTask, deleteTask, deleteAllTasks } =
+  tasksSlice.actions;
 
 export const selectTasks: (state: TaskStoreState) => ITask[] = (state) =>
   state.value;
