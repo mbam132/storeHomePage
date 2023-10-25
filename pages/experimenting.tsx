@@ -10,6 +10,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 // import FetchingAndCaching from '../components/Experimenting/FetchingAndCaching';
 // import StateHandling from '../components/Experimenting/StateHandling';
 import HandleUsers from '../components/Experimenting/HandleUsers';
+import GridExample from '../components/Experimenting/GridExample';
 import { IUserScope } from '../utils/types';
 
 function Experimenting() {
@@ -18,6 +19,7 @@ function Experimenting() {
       {/* <AnimBeforeRender/> */}
       {/* <FetchingAndCaching /> */}
       {/* <StateHandling /> */}
+      {/* <GridExample /> */}
       <HandleUsers />
     </div>
   );
